@@ -23,6 +23,9 @@
   "bin": [
     "bin/ia-invisible-cleaner"
   ],
+  "scripts": {
+    "tests": "vendor/bin/phpunit tests"
+  },
   "keywords": [
     "ai",
     "remove",

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\InvisibleCleaner\Tests;
+namespace BriceFab\InvisibleCleaner\Tests;
 
 use PHPUnit\Framework\TestCase;
 use BriceFab\InvisibleCleaner\IaInvisibleCleaner;
@@ -29,8 +29,19 @@ class IaInvisibleCleanerTest extends TestCase
 
     public function testNormalizeAndClean(): void
     {
+        if (!\class_exists(\Normalizer::class)) {
+            $this->markTestSkipped('intl extension (Normalizer) not available.');
+        }
+
         $s = "e\u{0301}"; // 'e' + combining acute
-        $out = IaInvisibleCleaner::normalizeAndClean($s, false, true);
-        $this->assertSame(mb_strlen($out), 1);
+        // 3e arg = mode (int), 4e = useIntlNormalizer (bool)
+        $out = IaInvisibleCleaner::normalizeAndClean(
+            $s,
+            false,
+            IaInvisibleCleaner::MODE_DEFAULT,
+            true
+        );
+
+        $this->assertSame(1, \mb_strlen($out));
     }
 }
