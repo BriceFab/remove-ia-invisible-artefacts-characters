@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use BriceFab\InvisibleCleaner\InvisibleCleaner;
+
+$stdin = stream_get_contents(STDIN);
+$removeAll = in_array('--no-whitespace', $argv, true);
+echo InvisibleCleaner::clean($stdin, $removeAll);
